@@ -24,7 +24,6 @@ class HandleReceivedMessage(threading.Thread):
                     )
 
     def webhook(self, sender, content, timestamp):
-        # data = get_data(self.client)
         if self.data.webhook:
             payload = dict(
                 sender=sender,
@@ -32,7 +31,6 @@ class HandleReceivedMessage(threading.Thread):
                 time=timestamp.strftime("%H:%M:%S"),
                 date=timestamp.strftime("%d/%m/%Y")
             )
-            print(payload)
             r = requests.post(self.data.webhook_url, data=payload)
         else:
             pass    
@@ -52,7 +50,6 @@ class HandleSendMessage(threading.Thread):
         try:
             if self.media:
                 self.driver.send_media(self.media, self.sender, self.content)
-                print("oke")
             else:
                 self.driver.send_message_to_id(self.sender, self.content)
             return True

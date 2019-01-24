@@ -11,4 +11,4 @@ flask
 Jinja2
 requests
 uWSGI
-flask-sqlalchemy
+flask-SQLAlchemy

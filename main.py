@@ -28,18 +28,6 @@ logger = None
 log_file = 'log.txt'
 log_level = logging.INFO
 
-def create_db():
-    with app.app_context():
-        db.create_all()
-        me = ApiConfig(
-            client="admin",
-            key="bQQfrpMRjV1epvvcnuuBB7hw3xY31NCO",
-            webhook=False,
-            webhook_url=""
-        )
-        db.session.add(me)
-        db.session.commit()
-
 def get_data(client_id):
     with app.app_context():
         return ApiConfig.query.filter_by(client=client_id).first()
@@ -209,6 +197,19 @@ def set_webhook():
 def hello():
     return "welcome to whatsapp api gateway"
 
+def create_db():
+    with app.app_context():
+        db.create_all()
+        me = ApiConfig(
+            client="admin",
+            key="bQQfrpMRjV1epvvcnuuBB7hw3xY31NCO",
+            webhook=False,
+            webhook_url=""
+        )
+        db.session.add(me)
+        db.session.commit()
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True)
+    if not os.path.exists(BASE_DIR+'/apiwahstapp.db'):
+        create_db()
+    app.run(host='0.0.0.0')

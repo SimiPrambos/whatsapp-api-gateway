@@ -9,7 +9,7 @@ ALLOWED_EXTENSIONS = ('avi', 'mp4', 'png', 'jpg', 'jpeg', 'gif', 'mp3', 'doc', '
 
 STATIC_FILES_PATH = 'static/'
 
-CHROME_IS_HEADLESS = False
+CHROME_IS_HEADLESS = True
 CHROME_DISABLE_SANDBOX = True
 CHROME_CACHE_PATH = BASE_DIR + '/chrome_cache/'
 CHROME_DISABLE_GPU = True
