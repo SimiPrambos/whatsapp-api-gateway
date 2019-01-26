@@ -11,6 +11,7 @@ from middlewares import (
     init_client,
     init_driver,
     init_timer,
+    delete_client,
     release_semaphore,
     login_required,
     get_client_info
@@ -193,7 +194,18 @@ def set_webhook():
             webhook=data.webhook,
             webhook_url=data.webhook_url
         ))
-        
+
+@app.route('/restart', methods=['POST'])
+def restart_driver():
+    args = request.get_json()
+    if not args or not 'remove_cache' in args:
+        abort(404, 'payload required')
+    rm_cache = args['remove_cache']
+    if not type(rm_cache) is bool:
+        abort(404, 'value must be boolean')
+    delete_client(g.client_id, rm_cache)
+    return jsonify({'status':'wait for few minutes and try to get info..'})
+
 @app.route("/")
 def hello():
     return "welcome to whatsapp api gateway"
