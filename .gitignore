@@ -1,0 +1,7 @@
+/__pycache__/
+/chrome_cache/
+*.pyc
+*.db
+*.txt
+/media/*
+/static/*
