@@ -1,5 +1,6 @@
 import threading
 import requests
+import json
 
 
 class HandleReceivedMessage(threading.Thread):
@@ -25,13 +26,16 @@ class HandleReceivedMessage(threading.Thread):
 
     def webhook(self, sender, content, timestamp):
         if self.data.webhook:
+            header = {
+                'Content-Type': 'application/json'
+            }
             payload = dict(
                 sender=sender,
                 content=content,
                 time=timestamp.strftime("%H:%M:%S"),
                 date=timestamp.strftime("%d/%m/%Y")
             )
-            r = requests.post(self.data.webhook_url, data=payload)
+            requests.post(self.data.webhook_url, headers=header, data=json.dumps(payload))
         else:
             pass    
 
@@ -41,8 +45,6 @@ class HandleSendMessage(threading.Thread):
         self.sender = sender if '@c.us' in sender else sender+'@c.us'
         self.content = content
         self.media = media
-        print(media)
-        print(self.sender)
         self.deamon = True
         threading.Thread.__init__(self)
 
