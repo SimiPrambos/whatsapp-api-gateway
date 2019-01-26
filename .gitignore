@@ -2,6 +2,6 @@
 /chrome_cache/
 *.pyc
 *.db
-*.txt
+log*
 /media/*
 /static/*
