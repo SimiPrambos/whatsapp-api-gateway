@@ -155,12 +155,13 @@ def send_message():
     
 @app.route('/sendfile', methods=['POST'])
 @login_required
-def send_file():
+def send_message_file():
     args = request.get_json()
     if not args:
         abort(401, 'payload is required!')
     saved_file = save_file(args['media'], args['filename'])
     if saved_file:
+        recipient = args['recipient']+'@c.us' if not '@c.us' in args['recipient'] else args['recipient']
         g.driver.send_media(saved_file, args['recipient'], args['content'])
         return jsonify({"status":True})
     else:
