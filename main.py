@@ -163,7 +163,7 @@ def send_message_file():
     saved_file = save_file(args['media'], args['filename'])
     if saved_file:
         recipient = args['recipient']+'@c.us' if not '@c.us' in args['recipient'] else args['recipient']
-        g.driver.send_media(saved_file, args['recipient'], args['content'])
+        g.driver.send_media(saved_file, recipient, args['content'])
         return jsonify({"status":True})
     else:
         return jsonify({"status":False})
