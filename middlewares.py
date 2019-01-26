@@ -67,7 +67,7 @@ def init_client(client_id):
     return drivers[client_id]
 
 
-def delete_client(client_id, preserve_cache):
+def delete_client(client_id, remove_cache):
     if client_id in drivers:
         drivers.pop(client_id).quit()
         try:
@@ -78,7 +78,7 @@ def delete_client(client_id, preserve_cache):
         except:
             pass
 
-    if not preserve_cache:
+    if remove_cache:
         pth = CHROME_CACHE_PATH + g.client_id
         shutil.rmtree(pth)
 
@@ -198,5 +198,5 @@ def release_semaphore(client_id):
     if not client_id:
         return False
 
-    if client_id in semaphores:
+    if client_id in semaphores and not semaphores[client_id] is None:
         semaphores[client_id].release()
