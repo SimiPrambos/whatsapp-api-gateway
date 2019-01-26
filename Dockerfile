@@ -9,4 +9,6 @@ COPY . $APP_HOME/
 
 RUN pip3 install -r requirement.txt
 
+RUN mkdir static && mkdir media
+
 CMD tail -f /dev/null
