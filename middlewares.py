@@ -183,7 +183,7 @@ def acquire_semaphore(client_id, cancel_if_locked=False):
     if not client_id:
         return False
 
-    if client_id not in semaphores:
+    if client_id not in semaphores or semaphores[client_id] is None:
         semaphores[client_id] = threading.Semaphore()
 
     timeout = 10
