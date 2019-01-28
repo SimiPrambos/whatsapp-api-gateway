@@ -84,7 +84,7 @@ def delete_client(client_id, remove_cache):
 
 
 def init_timer(client_id):
-    if client_id in timers and timers[client_id]:
+    if client_id in timers and not timers[client_id] is None:
         timers[client_id].start()
         return
     timers[client_id] = RepeatedTimer(2, check_new_messages, client_id)
@@ -107,8 +107,8 @@ def check_new_messages(client_id):
         # If we have new messages, do something with it
         if res:
             HandleReceivedMessage(drivers[client_id], res, client_id).start()
-    except:
-        pass
+    except Exception:
+        drivers.pop(client_id)
     finally:
         # Release lock anyway, safekeeping
         release_semaphore(client_id)
