@@ -14,3 +14,7 @@ CHROME_DISABLE_SANDBOX = True
 CHROME_CACHE_PATH = BASE_DIR + '/chrome_cache/'
 CHROME_DISABLE_GPU = True
 CHROME_WINDOW_SIZE = "910,512"
+
+# custom here
+DEFAULT_CLIENT = 'admin'
+DEFAULT_API_KEY = 'yoursecretapikey'

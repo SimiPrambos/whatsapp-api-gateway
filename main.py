@@ -4,7 +4,7 @@ import werkzeug
 from flask import Flask, request, abort, g, jsonify, send_file
 from webwhatsapi import WhatsAPIDriver, WhatsAPIDriverStatus
 from selenium.common.exceptions import WebDriverException
-from settings import STATIC_FILES_PATH, DATABASE_URI, BASE_DIR
+from settings import STATIC_FILES_PATH, DATABASE_URI, BASE_DIR, DEFAULT_API_KEY, DEFAULT_CLIENT
 from middlewares import (
     drivers,
     acquire_semaphore,
@@ -67,7 +67,7 @@ def before_request():
     logger.info("API call " + request.method + " " + request.url)
 
     auth_key = request.args.get('token')
-    g.client_id = 'admin'
+    g.client_id = DEFAULT_CLIENT
     rule_parent = request.url_rule.rule.split('/')[1]
     
     conf = ApiConfig.query.filter_by(client=g.client_id).first()
@@ -214,8 +214,8 @@ def create_db():
     with app.app_context():
         db.create_all()
         me = ApiConfig(
-            client="admin",
-            key="bQQfrpMRjV1epvvcnuuBB7hw3xY31NCO",
+            client=DEFAULT_CLIENT,
+            key=DEFAULT_API_KEY,
             webhook=False,
             webhook_url=""
         )
